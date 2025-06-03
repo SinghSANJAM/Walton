@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us - Sunday Warwickshire Walton Hall Hotel & Spa</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;700&family=Lora&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --transition: all 0.3s ease;
+      --primary-color: #a58a60; /* Gold */
+      --secondary-color: #333; /* Dark text for nav */
+      --base-font-size: 1rem; /* Base for scaling */
+      --image-width: 300px; /* Fixed image width */
+    }
+
+    /* Navbar header - enhanced with subtle animation */
+    .site-header {
+      background-color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    .logo img {
+      height: calc(var(--base-font-size) * 3.125); /* Scales with font: ~50px at 1rem */
+      transition: var(--transition);
+    }
+
+    .logo img:hover {
+      transform: scale(1.05);
+    }
+
+    .main-navigation ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-navigation ul li {
+      margin: 0 15px;
+    }
+
+    .main-navigation ul li a {
+      color: var(--secondary-color);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: calc(var(--base-font-size) * 0.9);
+      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .main-navigation ul li a:hover,
+    .main-navigation ul li a[aria-current="page"] {
+      color: var(--primary-color);
+    }
+
+    .main-navigation ul li a:hover::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: var(--primary-color);
+      bottom: -5px;
+      left: 0;
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .booking-button .nav-button {
+      background: linear-gradient(45deg, #a58a60, #d4af37);
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: calc(var(--base-font-size) * 0.875) calc(var(--base-font-size) * 1.75);
+      border-radius: 8px;
+      font-family: "Cinzel", serif;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(165, 138, 96, 0.3);
+      transition: all 0.4s ease;
+    }
+
+    .booking-button .nav-button:hover {
+      background: linear-gradient(45deg, #8b704d, #b89b45);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(165, 138, 96, 0.5);
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .mobile-menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background-color: var(--secondary-color);
+      margin: 3px 0;
+      transition: var(--transition);
+    }
+
+    /* About Section - luxe and interactive */
+    .about-section {
+      padding: calc(var(--base-font-size) * 6.25) 20px calc(var(--base-font-size) * 8.75);
+      background: linear-gradient(135deg, #f9f6f0 0%, #e8e8e3 100%);
+      font-family: "Lora", serif;
+      margin-top: calc(var(--base-font-size) * 5);
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #444;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://via.placeholder.com/50x50?text=Gold+Pattern') repeat;
+      opacity: 0.05;
+      z-index: -1;
+    }
+
+    .about-header {
+      text-align: center;
+      margin-bottom: calc(var(--base-font-size) * 4.375);
+    }
+
+    .about-header h2 {
+      font-family: "Cinzel", serif;
+      font-weight: 700;
+      font-size: calc(var(--base-font-size) * 2.8);
+      color: var(--primary-color);
+      margin-bottom: calc(var(--base-font-size) * 0.9375);
+      text-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .about-header p {
+      font-size: calc(var(--base-font-size) * 1.2);
+      color: #555;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* About content blocks with consistent sizing */
+    .about-content {
+      margin-top: calc(var(--base-font-size) * 3.125);
+      line-height: 1.6;
+      font-size: var(--base-font-size);
+      color: #333;
+      display: grid;
+      gap: calc(var(--base-font-size) * 2.5);
+    }
+
+    .about-block {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--base-font-size) * 1.875);
+      transition: var(--transition);
+    }
+
+    .about-block:hover {
+      transform: translateY(-5px);
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-text h3 {
+      font-family: "Cinzel", serif;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: calc(var(--base-font-size) * 0.9375);
+      font-size: calc(var(--base-font-size) * 1.6);
+    }
+
+    .about-text p {
+      margin-bottom: calc(var(--base-font-size) * 1.25);
+      line-height: 1.8;
+      font-size: var(--base-font-size);
+    }
+
+    .about-image {
+      flex: 0 0 var(--image-width);
+      position: relative;
+      height: calc(var(--image-width) * 0.75); /* 4:3 aspect ratio for consistency */
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures image fills space without distortion */
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .about-image img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 10px 30px rgba(165, 138, 96, 0.3);
+    }
+
+    .about-image .caption {
+      position: absolute;
+      bottom: calc(var(--base-font-size) * 0.625);
+      left: calc(var(--base-font-size) * 0.625);
+      background: rgba(165, 138, 96, 0.7);
+      color: white;
+      padding: calc(var(--base-font-size) * 0.5) calc(var(--base-font-size) * 0.9375);
+      border-radius: 5px;
+      font-family: "Lora", serif;
+      font-size: calc(var(--base-font-size) * 0.9);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .about-image:hover .caption {
+      opacity: 1;
+    }
+
+    /* Modal for Image Zoom */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      max-width: 80%;
+      max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(165, 138, 96, 0.5);
+    }
+
+    .close {
+      position: absolute;
+      top: calc(var(--base-font-size) * 1.25);
+      right: calc(var(--base-font-size) * 1.875);
+      color: var(--primary-color);
+      font-size: calc(var(--base-font-size) * 2.5);
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-navigation ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: calc(var(--base-font-size) * 4.375);
+        left: 0;
+        width: 100%;
+        background: #fff;
+        padding: calc(var(--base-font-size) * 1.25);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .main-navigation.active ul {
+        display: flex;
+      }
+
+      .mobile-menu-toggle {
+        display: flex;
+      }
+
+      .about-block {
+        flex-direction: column;
+      }
+
+      .about-image {
+        flex: 0 0 auto;
+        width: 100%;
+        height: calc(var(--image-width) * 0.75);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-container">
+      <div class="logo">
+        <a href="index.html" aria-label="Walton Hall Hotel & Spa Home">
+          <img src="logo.png" alt="Walton Hall Hotel & Spa Logo" class="logo-img" />
+        </a>
+      </div>
+      <nav class="main-navigation" aria-label="Primary Navigation">
+        <ul class="nav-menu">
+          <li><a href="about.html" aria-current="page" class="nav-link">About</a></li>
+          <li><a href="#rooms" class="nav-link">Rooms</a></li>
+          <li><a href="#dining" class="nav-link">Dining</a></li>
+          <li><a href="#spa" class="nav-link">Spa</a></li>
+          <li><a href="#weddings" class="nav-link">Weddings</a></li>
+          <li><a href="#meetings" class="nav-link">Meetings & Events</a></li>
+          <li><a href="#christmas" class="nav-link">Christmas</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="booking-button">
+        <button
+          type="button"
+          class="nav-button"
+          onclick="window.location.href='https://booking.emea.hkclients.com/index.html#/booking/search?pc=ENWCW001&property_id=a21b3ab9-512f-413e-91bc-5077d3b10bb0&url=https%3A%2F%2Fwww.oyorooms.com%2Fgb%2F292291%2F';"
+          aria-label="Book a room now"
+        >
+          <div class="button-label">
+            <span class="button-text">Book Now</span>
+          </div>
+        </button>
+      </div>
+      <div
+        class="mobile-menu-toggle"
+        aria-label="Toggle mobile menu"
+        role="button"
+        tabindex="0"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+    <section class="about-section" id="about">
+      <div class="about-header">
+        <h2>About Sunday Warwickshire Walton Hall Hotel & Spa</h2>
+        <p>
+          Nestled in the heart of Warwickshire, Walton Hall Hotel & Spa blends timeless heritage with contemporary luxury to craft an unforgettable escape of elegance and serenity.
+        </p>
+      </div>
+      <div class="about-content">
+        <div class="about-block">
+          <div class="about-text">
+            <h3>Our Storied Heritage</h3>
+            <p>
+              Dating back to the 17th century, Walton Hall has been meticulously restored, preserving its aristocratic charm while infusing modern sophistication for a truly opulent experience.
+            </p>
+          </div>
+          <div class="about-image">
+            <img src="welcome.jpg" alt="Historic Walton Hall Exterior" onclick="openModal(this.src)" />
+            <div class="caption">17th-Century Grandeur</div>
+          </div>
+        </div>
+
+        <div class="about-block">
+          <div class="about-text">
+            <h3>Our Philosophy</h3>
+            <p>
+              We are devoted to unparalleled service, weaving warmth, elegance, and meticulous detail into every guest’s journey for a bespoke, luxurious stay.
+            </p>
+          </div>
+          <div class="about-image">
+            <img src="Hall Night.jpg" alt="Attentive Staff Service" onclick="openModal(this.src)" />
+            <div class="caption">Bespoke Hospitality</div>
+          </div>
+        </div>
+
+        <div class="about-block">
+          <div class="about-text">
+            <h3>Luxury & Wellness</h3>
+            <p>
+              Indulge in our award-winning spa and savor gourmet dining, all set against the tranquil grandeur of our estate for ultimate rejuvenation.
+            </p>
+          </div>
+          <div class="about-image">
+            <img src="spa.jpg" alt="Luxurious Spa Retreat" onclick="openModal(this.src)" />
+            <div class="caption">Serenity & Indulgence</div>
+          </div>
+        </div>
+
+        <div class="about-block">
+          <div class="about-text">
+            <h3>Our Location</h3>
+            <p>
+              Perfectly poised near Stratford-upon-Avon, explore cultural treasures, scenic countryside, and local charm, all from our 65-acre Warwickshire haven.
+            </p>
+          </div>
+          <div class="about-image">
+            <img src="Site.PNG" alt="Warwickshire Countryside" onclick="openModal(this.src)" />
+            <div class="caption">Scenic Warwickshire</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal for Image Zoom -->
+  <div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">×</span>
+    <img class="modal-content" id="modalImage" />
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('.main-navigation');
+    mobileToggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+
+    // Image modal functionality
+    function openModal(src) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      modal.style.display 
+      modalImg.src = src;
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+    }
+
+    // Close modal on click outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('imageModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

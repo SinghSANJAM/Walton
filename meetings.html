@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sunday Warwickshire Walton Hall Hotel & Spa</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;700&family=Lora&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --transition: all 0.3s ease;
+      --primary-color: #a58a60; /* Gold */
+      --secondary-color: #333; /* Dark text for nav */
+    }
+
+    /* Navbar header */
+    .site-header {
+      background-color: #fff; /* White background */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    /* Logo */
+    .logo img {
+      height: 50px;
+    }
+
+    /* Navigation menu */
+    .main-navigation ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-navigation ul li {
+      margin: 0 15px;
+    }
+
+    .main-navigation ul li a {
+      color: var(--secondary-color);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .main-navigation ul li a:hover {
+      color: var(--primary-color);
+    }
+
+    /* Booking button */
+    .booking-button .nav-button {
+      background: linear-gradient(45deg, #a58a60, #d4af37);
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: "Cinzel", serif;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(165, 138, 96, 0.3);
+      transition: all 0.4s ease;
+    }
+
+    .booking-button .nav-button:hover {
+      background: linear-gradient(45deg, #8b704d, #b89b45);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(165, 138, 96, 0.5);
+    }
+
+    /* Mobile menu toggle hamburger */
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .mobile-menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background-color: var(--secondary-color);
+      margin: 3px 0;
+      transition: var(--transition);
+    }
+
+    /* Meetings Section */
+    .meetings-section {
+      padding: 80px 20px 120px;
+      background-color: #f9f6f0;
+      font-family: "Lora", serif;
+      margin-top: 80px; /* So content doesn't hide under fixed header */
+    }
+
+    .meetings-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .meetings-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .meetings-header h2 {
+      font-family: "Cinzel", serif;
+      font-weight: 700;
+      font-size: 2.6rem;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .meetings-header p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .meetings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 35px;
+    }
+
+    .meeting-room {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(165, 138, 96, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .meeting-room:hover {
+      transform: translateY(-8px);
+    }
+
+    .meeting-room img {
+      width: 100%;
+      object-fit: cover;
+      height: 180px;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .meeting-room-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .meeting-room-content h3 {
+      font-family: "Cinzel", serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--primary-color);
+    }
+
+    .meeting-room-content p {
+      flex-grow: 1;
+      color: #444;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .meeting-room-capacity {
+      font-weight: 600;
+      color: #666;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(51, 51, 51, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1500;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 14px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 25px 30px;
+      position: relative;
+      font-family: "Lora", serif;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: #6e5c2f;
+    }
+
+    .modal-title {
+      font-family: "Cinzel", serif;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+
+    .modal-description {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    .modal-floorplan {
+      width: 100%;
+      max-height: 350px;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 8px 15px rgba(165, 138, 96, 0.25);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      .meetings-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-navigation ul {
+        display: none; /* We'll add toggle in future */
+      }
+
+      .mobile-menu-toggle {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-container">
+      <div class="logo">
+        <a href="index.html" aria-label="Walton Hall Hotel & Spa Home">
+          <img src="logo.png" alt="Walton Hall Hotel & Spa Logo" class="logo-img" />
+        </a>
+      </div>
+      <nav class="main-navigation" aria-label="Primary Navigation">
+        <ul class="nav-menu">
+          <li><a href="about.html" aria-current="page" class="nav-link">About</a></li>
+          <li><a href="#rooms" class="nav-link">Rooms</a></li>
+          <li><a href="#dining" class="nav-link">Dining</a></li>
+          <li><a href="#spa" class="nav-link">Spa</a></li>
+          <li><a href="#weddings" class="nav-link">Weddings</a></li>
+          <li><a href="#meetings" class="nav-link">Meetings & Events</a></li>
+          <li><a href="#christmas" class="nav-link">Christmas</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="booking-button">
+        <button
+          type="button"
+          class="nav-button"
+          onclick="window.location.href='https://booking.emea.hkclients.com/index.html#/booking/search?pc=ENWCW001&property_id=a21b3ab9-512f-413e-91bc-5077d3b10bb0&url=https%3A%2F%2Fwww.oyorooms.com%2Fgb%2F292291%2F';"
+          aria-label="Book a room now"
+        >
+          <div class="button-label">
+            <span class="button-text">Book Now</span>
+          </div>
+        </button>
+      </div>
+      <div
+        class="mobile-menu-toggle"
+        aria-label="Toggle mobile menu"
+        role="button"
+        tabindex="0"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Meetings Section -->
+  <section class="meetings-section" id="meetings">
+    <div class="meetings-container">
+      <div class="meetings-header">
+        <h2>Meetings & Events</h2>
+        <p>
+          Hosting meetings and events in the picturesque surroundings of Walton Hall provides a unique blend of
+          history, elegance, and modern facilities. Explore our stunning meeting rooms perfect for any occasion.
+        </p>
+      </div>
+      <div class="meetings-grid" role="list">
+        <article class="meeting-room" role="listitem" tabindex="0" aria-describedby="desc-conference">
+          <img
+            src="meeting.jpg"
+            alt="Elegant Conference Room"
+            loading="lazy"
+            width="400"
+            height="180"
+          />
+          <div class="meeting-room-content">
+            <h3>Conference Room</h3>
+            <p id="desc-conference">
+              A spacious, light-filled room with state-of-the-art AV equipment. Ideal for seminars and workshops.
+            </p>
+            <p class="meeting-room-capacity">Capacity: 60 seated</p>
+          </div>
+        </article>
+        <article class="meeting-room" role="listitem" tabindex="0" aria-describedby="desc-ballroom">
+          <img
+            src="meeting2.jpg"
+            alt="Grand Ballroom"
+            loading="lazy"
+            width="400"
+            height="180"
+          />
+          <div class="meeting-room-content">
+            <h3>Grand Ballroom</h3>
+            <p id="desc-ballroom">
+              An elegant ballroom suitable for large events, weddings, and conferences with flexible layouts.
+            </p>
+            <p class="meeting-room-capacity">Capacity: 250 seated</p>
+          </div>
+        </article>
+        <article class="meeting-room" role="listitem" tabindex="0" aria-describedby="desc-boardroom">
+          <img
+            src="meeting3.jpg"
+            alt="Cozy Boardroom"
+            loading="lazy"
+            width="400"
+            height="180"
+          />
+          <div class="meeting-room-content">
+            <h3>Boardroom</h3>
+            <p id="desc-boardroom">
+              A private and intimate room perfect for executive meetings and strategy sessions.
+            </p>
+            <p class="meeting-room-capacity">Capacity: 12 seated</p>
+          </div>
+        </article>
+        <article class="meeting-room" role="listitem" tabindex="0" aria-describedby="desc-garden-room">
+          <img
+            src="meeting5.jpg"
+            alt="Bright Garden Room"
+            loading="lazy"
+            width="400"
+            height="180"
+          />
+          <div class="meeting-room-content">
+            <h3>Garden Room</h3>
+            <p id="desc-garden-room">
+              Overlooking our beautiful gardens, this room offers a tranquil setting for creative workshops.
+            </p>
+            <p class="meeting-room-capacity">Capacity: 40 seated</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal for meetings details -->
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" id="modal">
+    <div class="modal-content" role="document">
+      <button class="modal-close" aria-label="Close modal" id="modalClose">&times;</button>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-description" id="modalDescription"></p>
+      <img src="" alt="" class="modal-floorplan" id="modalImage" />
+    </div>
+  </div>
+
+  <script>
+    // Modal data for each meeting room
+    const meetingRoomsData = {
+      "Conference Room": {
+        description:
+          "Our Conference Room offers a spacious environment equipped with cutting-edge audiovisual technology, perfect for seminars, workshops, and corporate meetings.",
+        image: "conference-floorplan.jpg",
+        imageAlt: "Floor plan of the Conference Room",
+      },
+      "Grand Ballroom": {
+        description:
+          "The Grand Ballroom is an exquisite space that accommodates large gatherings such as weddings, gala dinners, and conferences, featuring flexible seating arrangements.",
+        image: "ballroom-floorplan.jpg",
+        imageAlt: "Floor plan of the Grand Ballroom",
+      },
+      Boardroom: {
+        description:
+          "The Boardroom provides a private and sophisticated atmosphere ideal for executive meetings and strategic planning sessions.",
+        image: "boardroom-floorplan.jpg",
+        imageAlt: "Floor plan of the Boardroom",
+      },
+      "Garden Room": {
+        description:
+          "Overlooking lush gardens, the Garden Room is perfect for creative workshops, offering a peaceful and inspiring setting.",
+        image: "garden-floorplan.jpg",
+        imageAlt: "Floor plan of the Garden Room",
+      },
+    };
+
+    // Elements
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const modalImage = document.getElementById("modalImage");
+    const modalClose = document.getElementById("modalClose");
+
+    // Open modal with data
+    function openModal(roomName) {
+      const data = meetingRoomsData[roomName];
+      if (!data) return;
+
+      modalTitle.textContent = roomName;
+      modalDescription.textContent = data.description;
+      modalImage.src = data.image;
+      modalImage.alt = data.imageAlt;
+
+      modal.setAttribute("aria-hidden", "false");
+      modal.classList.add("active");
+      modalClose.focus();
+    }
+
+    // Close modal
+    function closeModal() {
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    // Event listeners for meeting rooms
+    document.querySelectorAll(".meeting-room").forEach((room) => {
+      room.addEventListener("click", () => {
+        const roomName = room.querySelector("h3").textContent;
+        openModal(roomName);
+      });
+      room.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const roomName = room.querySelector("h3").textContent;
+          openModal(roomName);
+        }
+      });
+    });
+
+    // Close modal on close button click
+    modalClose.addEventListener("click", closeModal);
+
+    // Close modal on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("active")) {
+        closeModal();
+      }
+    });
+
+    // Close modal if click outside modal content
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
